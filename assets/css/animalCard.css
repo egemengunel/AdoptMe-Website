@@ -1,15 +1,38 @@
+.animals-container {
+    margin-top: 40px;
+}
+
+.animal-category {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.animal-count {
+    font-size: 14px;
+    font-weight: 400;
+    color: #494949;
+}
+
 .animal-card {
     width: 290px;
-    text-align: left;
+    text-align: center;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .animal-img {
     width: 100%;
+    height: auto;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .animal-item {
     margin-top: 10px;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: 700;
+    color: black;
 }
+

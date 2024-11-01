@@ -1,0 +1,33 @@
+# macOS system files
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env
+.env.local
+
+# Dependency directories
+node_modules/
+vendor/
+
+# IDE-specific files
+.vscode/
+.idea/
+
+# Cache and build artifacts
+.cache/
+dist/
+out/
+build/
+
+# Thumbnails or generated image files (if any)
+assets/img/generated/
+
+# Git's own files that track changes
+*.lock
+
+# SFTP config
+.sftp-config.json
