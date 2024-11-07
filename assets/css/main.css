@@ -92,12 +92,23 @@ footer {
 }
 
 .search-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px; /* Adjust the spacing between the icon and text as needed */
     padding: 10px 20px;
     background-color: black;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+
+/* Style the search icon within the button */
+.search-icon {
+    width: 16px; /* Adjust the size as needed */
+    height: 16px;
 }
 
 /* Custom Dropdown */
@@ -107,6 +118,12 @@ footer {
     background-color: #E9E9E9;
     padding: 7px;
     border-radius: 5px;
+}
+
+.dropdown-icon {
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
 }
 
 /* Arrow Icon */

@@ -36,3 +36,22 @@
     color: black;
 }
 
+.animal-link {
+    text-decoration: none;
+    color: #000000;
+}
+
+.animal-link:hover {
+    color: #000000; /* Keeps the color change on hover */
+    text-decoration: none; /* Ensures no underline appears on hover */
+}
+
+.animal-cards-row {
+    display: flex;
+    gap: 20px;
+}
+
+/* Ensure the 'animal-category' doesn't add unexpected margins */
+.animal-category:first-of-type {
+    margin-top: 70px; /* Adjust if needed */
+}

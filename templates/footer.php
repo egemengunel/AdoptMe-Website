@@ -1,22 +1,23 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Page Title</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/footer.css">
+</head>
+
 <div class="footer">
-    <div class="footer-text">
-        ©2024 adoptme.com<br/> <br/>
-        All trademarks are owned by Egemen Gunel, or used with permission.
+    <div class="footer-column footer-contact">
+        <h4>Contact Us</h4>
+        <p>Email: egemenwebdev@gmail.com</p>
+        <p>On X : @OnlyTrueNote7</p>
     </div>
-    <div class="footer-title about-dogs">About Dogs and Puppies</div>
-    <div class="footer-title about-cats">About Cats and Kittens</div>
-    <div class="footer-title contact-us">Contact us</div>
-    <div class="footer-section about-cats-section">
-        <div class="footer-item">Lorem Ipsum</div>
-        <div class="footer-item">Lorem Ipsum</div>
-        <div class="footer-item">Lorem Ipsum</div>
-        <div class="footer-item">Lorem Ipsum</div>
+    <div class="footer-column footer-about">
+        <h4>About Dogs and Cats</h4>
+        <p>Dogs and Puppies</p>
+        <p>Cats and Kittens</p>
     </div>
-    <div class="footer-section about-dogs-section">
-        <div class="footer-item">Lorem Ipsum</div>
-        <div class="footer-item">Lorem Ipsum</div>
-        <div class="footer-item">Lorem Ipsum</div>
-        <div class="footer-item">Lorem Ipsum</div>
+    <div class="footer-column footer-info">
+        <p>©2024 adoptme.com</p>
+        <p>All trademarks are owned by Egemen Gunel, or used with permission.</p>
     </div>
-    <div class="footer-title resources">Resources</div>
 </div>

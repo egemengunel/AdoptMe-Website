@@ -1,34 +1,39 @@
 /* General header styles */
 .header {
     width: 100%;
-    height: 100%;
     display: grid;
     grid-template-columns: auto 1fr auto;
-    align-items: center;
+    align-items: center; /* Vertically centers all elements within the header */
+    padding: 5px; /* Add some padding for visual breathing room */
 }
 
 /* Logo section */
 .header-logo {
     display: flex;
     align-items: center;
+    gap: 5px; /* Add a gap for spacing between the logo icon and the text */
 }
 
 .header-logo-icon {
-    width: 32px;
+    width: 32px;  /* Adjust to a reasonable size for your design */
     height: 32px;
     border-radius: 7px;
     overflow: hidden;
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
 }
-
+.header-logo-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Ensures the logo maintains its aspect ratio */
+}
 .header-logo-text {
     color: black;
-    font-size: 14px;
+    font-size: 18px; /* Adjust this as per your Figma, looks like it needs to be bigger */
     font-family: 'Inter', sans-serif;
-    font-weight: 700;
-    margin-left: 8px; /* Spacing between icon and text */
+    font-weight: 800; /* Make it bold to match Figma design */
+    margin-left: 8px; /* You can keep this or replace with gap in the parent */
 }
 
 /* Navigation section */
@@ -40,9 +45,10 @@
 }
 
 .nav-item {
+    text-decoration: none;
     text-align: center;
     color: #494949;
-    font-size: 14px;
+    font-size: 18px;
     font-family: 'Inter', sans-serif;
     font-weight: 600;
 }
@@ -56,6 +62,7 @@
 }
 
 .signin-button {
+    text-decoration: none; /* Remove underline */
     padding: 7.5px 17px;
     background: rgba(217, 217, 217, 0);
     border-radius: 7px;
@@ -67,7 +74,7 @@
 
 .signin-text {
     color: black;
-    font-size: 14px;
+    font-size: 18px;
     font-family: 'Inter', sans-serif;
     font-weight: 700;
 }

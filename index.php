@@ -25,21 +25,28 @@
         </div>
         
         <div class="search-bar">
-        <div class="custom-dropdown">
-            <img class="dropdown-icon" src="assets/icons/DogSit.png" alt="Dog Icon">
-            <select class="search-category search-element">
-                <option value="dogs">Dogs</option>
-                <option value="cats">Cats</option>
-            </select>
-            <img class="arrow-icon" src="assets/icons/Expand_Arrow.png" alt="Arrow Icon">
-        </div>
-        <input type="text" class="search-input search-element" placeholder="Search by breed, age or name...">
-        <button class="search-button search-element">Search</button>
-        </div>
+    <div class="custom-dropdown">
+        <img class="dropdown-icon" id="animal-icon" src="assets/icons/DogSit.png" alt="Animal Icon" 
+             data-dog-icon="assets/icons/DogSit.png" 
+             data-cat-icon="assets/icons/cat-sit.png">
+        <select class="search-category search-element" id="animal-select">
+            <option value="dogs">Dogs</option>
+            <option value="cats">Cats</option>
+        </select>
+        <img class="arrow-icon" src="assets/icons/Expand_Arrow.png" alt="Arrow Icon">
+    </div>
+    <input type="text" class="search-input search-element" placeholder="Search by breed, age or name...">
+    <button class="search-button search-element">
+    <img src="assets/icons/Search.png" alt="Search Icon" class="search-icon">
+    Search
+</button>
+</div>
 
 
         <div class="animals-container">
-            <div class="animal-category" style="width: 100%; text-align: left; font-size: 24px; font-weight: bold; margin-bottom: 20px;">Dogs <span class="animal-count">137</span></div>
+        <div class="animal-category">
+        <a href="dogs.php" class="animal-link">Dogs</a> <span class="animal-count">137</span>
+        </div>
             <div class="animal-cards-row" style="display: flex; gap: 20px;">
                 <?php
                     $imageSrc = "https://via.placeholder.com/290x213";
@@ -63,7 +70,9 @@
                 ?>
             </div>
 
-            <div class="animal-category" style="width: 100%; text-align: left; font-size: 24px; font-weight: bold; margin-top: 63px;">Cats <span class="animal-count">137</span></div>
+            <div class="animal-category">
+             <a href="cats.php" class="animal-link">Cats</a> <span class="animal-count">137</span>
+            </div>
             <div class="animal-cards-row" style="display: flex; gap: 20px;">
                 <?php
                     $imageSrc = "https://via.placeholder.com/290x213";
@@ -90,5 +99,6 @@
     </div>
 
     <?php include 'templates/footer.php'; ?>
+    <script src="assets/js/script.js"></script>
 </body>
 </html>
