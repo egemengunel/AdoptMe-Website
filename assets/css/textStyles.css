@@ -1,0 +1,131 @@
+/* Set global font family */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- Text Styles for Main Page (index.php) --- */
+
+/* Hero Text */
+.hero-text {
+    font-size: 55px; /* Matches Figma specification */
+    font-weight: 800; /* Equivalent to "Black" in Inter */
+}
+
+.sub-text {
+    font-size: 16px;
+    line-height: 24px;
+    color: #494949;
+}
+
+.highlighted-text {
+    font-size: 55px;
+    font-weight: 800;
+    color: #FFBD59;
+}
+
+.highlighted-sub-text {
+    font-weight: 700;
+}
+
+/* Search Elements */
+.search-category {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.search-input {
+    font-size: 14px;
+}
+
+.search-button {
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* --- Text Styles for Animal Pages (`dogs.php`, `cats.php`) --- */
+
+/* Page Titles */
+.page-title {
+    font-weight: 700;
+    font-size: 33px;
+    color: black;
+}
+
+/* Animal Category Title */
+.animal-category {
+    font-size: 18px;
+    font-weight: 700;
+    color: black;
+}
+
+/* Animal Link */
+.animal-link {
+    text-decoration: none;
+    color: #000000;
+}
+
+.animal-link:hover {
+    color: #000000;
+    text-decoration: none;
+}
+
+/* Animal Count */
+.animal-count {
+    font-size: 14px;
+    font-weight: 400;
+    color: #494949;
+}
+
+/* Filter Text */
+.filter-text {
+    text-align: center;
+    color: black;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 24px;
+    word-wrap: break-word;
+}
+
+/* --- Text Styles for Animal Card --- */
+
+/* Animal Name */
+.animal-item {
+    font-size: 16px;
+    font-weight: 700;
+    color: black;
+}
+
+/* --- Text Styles for Header --- */
+
+.header-logo-text {
+    color: black;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.nav-item {
+    color: #494949;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.signin-text {
+    color: black;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* --- Text Styles for Footer --- */
+
+.footer {
+    color: #494949;
+    font-size: 14px;
+}
+
+.footer-column h4 {
+    font-weight: 700;
+    color: black;
+}

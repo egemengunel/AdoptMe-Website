@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/header.css">
     <link rel="stylesheet" type="text/css" href="assets/css/footer.css">
     <link rel="stylesheet" type="text/css" href="assets/css/animalCard.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/textStyles.css">
 </head>
 <body>
     <?php include 'templates/header.php'; ?>
@@ -15,8 +16,8 @@
     <div class="main-content">
         <div class="hero-title">
             <span class="hero-text">Every Pet Deserves a Loving Home.</span><br>
-            <span class="highlighted-text">Adopt</span>
-            <span class="hero-text"> a Pet Today</span>
+            <span class="highlighted-text">Adopt </span>
+            <span class="hero-text">a Pet Today</span>
         </div>
         <div class="hero-subtitle">
             <span class="sub-text">Browse our available animals and learn more about the adoption process. Together, we can </span>
