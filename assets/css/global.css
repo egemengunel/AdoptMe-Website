@@ -1,0 +1,44 @@
+/* global.css */
+
+/* Reset and Global Styles */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Wrapper */
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Content Wrapper */
+.content-wrapper {
+    flex: 1;
+}
+
+/* General Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.margin-0-auto {
+    margin: 0 auto;
+}
+
+.padding-20 {
+    padding: 20px;
+}
+
+/* Footer */
+footer {
+    flex-shrink: 0;
+}

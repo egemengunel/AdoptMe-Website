@@ -1,38 +1,11 @@
-/* General Styles */
-body {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
+/* main.css (or index.css) */
 
-/* Page Layout */
-html {
-    height: 100%;
-}
-
+/* Main Content */
 .main-content {
     max-width: 1440px;
     margin: 0 auto;
     padding: 20px;
     background-color: #ffffff;
-    flex: 1;
-}
-
-footer {
-    flex-shrink: 0;
-}
-
-/* Hero Section */
-.hero-title {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.hero-subtitle {
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto;
 }
 
 /* Search Bar */
