@@ -20,7 +20,7 @@ The project is organized into the following main directories and files:
   - **/assets/icons**: Contains icons used across the website.
 - **/includes**: Contains the backend files for functionalities like database connections.
 - **index.php**: The main entry point of the website.
-- **other PHP files** (`dogs.php`, `cats.php`, `favorites.php`, etc.): Represent different pages of the website.
+- **other PHP files** (`browseAnimals.php`, `auth.php`, `favorites.php`, etc.): Represent different pages of the website.
 
 ## Installation and Setup
 1. **Prerequisites**: Make sure you have a local server environment set up (e.g., XAMPP, WAMP, or MAMP).
