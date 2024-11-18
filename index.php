@@ -46,9 +46,11 @@
 
 
         <div class="animals-container">
-        <div class="animal-category">
-        <a href="dogs.php" class="animal-link">Dogs</a> <span class="animal-count">137</span>
-        </div>
+            <!-- Dogs Section -->
+            <div class="animal-category">
+                <a href="browseAnimals.php?type=dogs" class="animal-link">Dogs</a> 
+                <span class="animal-count">137</span>
+            </div>
             <div class="animal-cards-row" style="display: flex; gap: 20px;">
                 <?php
                     $imageSrc = "https://via.placeholder.com/290x213";
@@ -72,8 +74,10 @@
                 ?>
             </div>
 
+            <!-- Cats Section -->
             <div class="animal-category">
-             <a href="cats.php" class="animal-link">Cats</a> <span class="animal-count">137</span>
+                <a href="browseAnimals.php?type=cats" class="animal-link">Cats</a> 
+                <span class="animal-count">137</span>
             </div>
             <div class="animal-cards-row" style="display: flex; gap: 20px;">
                 <?php

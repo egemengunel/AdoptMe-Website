@@ -172,3 +172,63 @@ body {
     color: #494949;
     text-decoration: underline;
 }
+
+/* --- Text Styles for Animal Details Page --- */
+
+/* Animal Details Title */
+.details-header h1 {
+    font-size: 33px;
+    font-weight: 700;
+    color: black;
+    margin: 0;
+}
+
+/* About Section */
+.about-section h2 {
+    font-size: 24px;
+    color: #494949;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* Description Text */
+.description {
+    font-size: 18px;
+    color: #494949;
+    font-weight: 600;
+    line-height: 1.6;
+}
+
+/* Characteristics Text */
+.characteristics-text, 
+.breed-location {
+    font-size: 18px;
+    color: #494949;
+    font-weight: 600;
+    text-align: center;
+    margin: 10px 0;
+}
+
+/* Contact Section Title */
+.contact-section h2 {
+    font-size: 24px;
+    color: #494949;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* Address and Phone */
+.address,
+.phone {
+    font-size: 18px;
+    color: #494949;
+    font-weight: 600;
+    margin: 10px 0;
+}
+
+/* Favorite Button Text */
+.favorite-btn {
+    font-size: 16px;
+    font-weight: 700;
+    color: #494949;
+}
