@@ -1,86 +1,106 @@
 <?php
-// auth.php
+require_once 'includes/db_connect.php';
+require_once 'includes/AuthManager.php';
 
-// Determine the mode (signin or signup)
-$mode = isset($_GET['mode']) ? $_GET['mode'] : 'signin';
+$auth = new AuthManager($conn);
+$mode = $_GET['mode'] ?? 'signin';
+$error = '';
 
-// Set variables based on the mode
-if ($mode === 'signup') {
-    $title = 'Create Your Account';
-    $form_action = 'process_signup.php';
-    $button_text = 'Sign Up';
-    $alternate_text = 'or Sign In';
-    $alternate_link = 'auth.php?mode=signin';
-    $show_confirm_password = true; // Set to true if you want to include confirm password field
-} else {
-    $title = 'Welcome Back 👋';
-    $form_action = 'process_signin.php';
-    $button_text = 'Sign In';
-    $alternate_text = 'or Create a New Account';
-    $alternate_link = 'auth.php?mode=signup';
-    $show_confirm_password = false;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($mode === 'signin') {
+        $email = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
+        
+        error_log("Login attempt with email: " . $email);
+        
+        if ($auth->login($email, $password)) {
+            header('Location: index.php');
+            exit;
+        } else {
+            error_log("Login failed for email: " . $email);
+            $error = 'Invalid email or password';
+        }
+    } else {
+        $username = $_POST['username'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
+        
+        if ($auth->register($username, $email, $password)) {
+            // Auto login after registration
+            $auth->login($email, $password);
+            header('Location: index.php');
+            exit;
+        } else {
+            $error = 'Registration failed. Email might already be in use.';
+        }
+    }
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title><?php echo ($mode === 'signup') ? 'Sign Up' : 'Sign In'; ?> - AdoptMe</title>
+    <title><?php echo ucfirst($mode); ?> - AdoptMe</title>
+    <!-- Global Styles -->
     <link rel="stylesheet" href="assets/css/global.css">
-    <link rel="stylesheet" href="assets/css/header.css">
-    <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="stylesheet" href="assets/css/auth.css">
+    <!-- Text Styles -->
     <link rel="stylesheet" href="assets/css/textStyles.css">
+    <!-- Header Styles -->
+    <link rel="stylesheet" href="assets/css/header.css">
+    <!-- Footer Styles -->
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <!-- Auth Page Specific Styles -->
+    <link rel="stylesheet" href="assets/css/auth.css">
 </head>
 <body>
     <div class="wrapper">
-        <!-- Header -->
-        <?php include 'templates/header.php'; ?>
-
-        <!-- Main Content -->
         <div class="content-wrapper">
-            <div class="content-container">
-                <!-- Auth Form -->
-                <div class="auth-form-container">
-                    <div class="auth-form">
-                        <h1 class="auth-title"><?php echo $title; ?></h1>
-
-                        <form action="<?php echo $form_action; ?>" method="POST">
-                            <div class="form-content">
-                                <!-- Email Field -->
+            <?php include 'templates/header.php'; ?>
+            
+            <div class="auth-form-container">
+                <div class="auth-form">
+                    <h1 class="auth-title"><?php echo $mode === 'signin' ? 'Sign In' : 'Sign Up'; ?></h1>
+                    
+                    <?php if ($error): ?>
+                        <div class="error-message"><?php echo htmlspecialchars($error); ?></div>
+                    <?php endif; ?>
+                    
+                    <div class="form-content">
+                        <form method="POST">
+                            <?php if ($mode === 'signup'): ?>
                                 <div class="form-group">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="email" id="email" name="email" class="form-input" required>
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" id="username" name="username" class="form-input" required>
                                 </div>
-
-                                <!-- Password Field -->
-                                <div class="form-group">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input type="password" id="password" name="password" class="form-input" required>
-                                </div>
-
-                                <?php if ($show_confirm_password): ?>
-                                <!-- Confirm Password Field -->
-                                <div class="form-group">
-                                    <label for="confirm_password" class="form-label">Confirm Password</label>
-                                    <input type="password" id="confirm_password" name="confirm_password" class="form-input" required>
-                                </div>
+                            <?php endif; ?>
+                            
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" id="email" name="email" class="form-input" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" id="password" name="password" class="form-input" required>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <?php if ($mode === 'signin'): ?>
+                                    <a href="?mode=signup" class="alternate-link">Don't have an account? Sign Up</a>
+                                <?php else: ?>
+                                    <a href="?mode=signin" class="alternate-link">Already have an account? Sign In</a>
                                 <?php endif; ?>
-
-                                <!-- Form Actions -->
-                                <div class="form-actions">
-                                    <a href="<?php echo $alternate_link; ?>" class="alternate-link"><?php echo $alternate_text; ?></a>
-                                    <button type="submit" class="auth-form-button"><?php echo $button_text; ?></button>
-                                </div>
+                                
+                                <button type="submit" class="auth-form-button">
+                                    <?php echo $mode === 'signin' ? 'Sign In' : 'Sign Up'; ?>
+                                </button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Footer -->
+        
         <?php include 'templates/footer.php'; ?>
     </div>
 </body>

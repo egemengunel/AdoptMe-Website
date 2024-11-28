@@ -1,3 +1,10 @@
+<?php
+require_once 'includes/db_connect.php';
+require_once 'includes/AuthManager.php';
+
+$auth = new AuthManager($conn);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

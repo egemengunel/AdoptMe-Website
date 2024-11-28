@@ -47,7 +47,7 @@
     text-align: center;
 }
 
-/* Sign-in button section */
+/* Sign-in button and Profile button styles */
 .header-signin {
     display: flex;
     align-items: center;
@@ -55,6 +55,7 @@
     padding: 23px;
 }
 
+/* Original signin button styles */
 .signin-button {
     text-decoration: none;
     padding: 7.5px 17px;
@@ -64,6 +65,37 @@
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+/* Profile button styles that match signin button */
+.profile-button .user-profile {
+    text-decoration: none;
+    padding: 7.5px 17px;
+    background: rgba(217, 217, 217, 0);
+    border-radius: 7px;
+    border: 0.25px solid #CBCBCB;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-button .profile-pic {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-button .username {
+    color: black;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* Hover effects for both buttons */
+.signin-button:hover,
+.profile-button .user-profile:hover {
+    background-color: #f5f5f5;
 }
 
 /* Responsive adjustments */
@@ -81,4 +113,86 @@
     .header-signin {
         margin-top: 10px;
     }
+}
+
+/* Profile Dropdown Menu */
+.profile-button {
+    position: relative;
+}
+
+.profile-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 200px;
+    background: black;
+    border-radius: 7px;
+    padding: 15px 9px 16px 10px;
+    display: none;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.profile-dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: 20px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid black;
+}
+
+.profile-button:hover .profile-dropdown-menu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0.2s;
+}
+
+.profile-dropdown-menu:hover {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+.profile-button:not(:hover) .profile-dropdown-menu:not(:hover) {
+    transition-delay: 0.5s;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    font-family: Inter, sans-serif;
+    font-weight: 600;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-item .icon {
+    width: 14px;
+    height: 14px;
+}
+
+.dropdown-item.upload .icon {
+    filter: brightness(0) saturate(100%) invert(80%) sepia(27%) saturate(1129%) hue-rotate(332deg) brightness(101%) contrast(101%);
+}
+
+/* Add some spacing between items */
+.dropdown-item:not(:last-child) {
+    margin-bottom: 12px;
 }
