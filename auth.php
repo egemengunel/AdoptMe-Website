@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once 'includes/db_connect.php';
 require_once 'includes/AuthManager.php';
 
@@ -14,6 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         error_log("Login attempt with email: " . $email);
         
         if ($auth->login($email, $password)) {
+            error_log("Login successful for: " . $email);
+            error_log("Session data: " . print_r($_SESSION, true));
             header('Location: index.php');
             exit;
         } else {

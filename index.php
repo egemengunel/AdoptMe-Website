@@ -1,8 +1,5 @@
 <?php
-require_once 'includes/db_connect.php';
-require_once 'includes/AuthManager.php';
-
-$auth = new AuthManager($conn);
+include 'templates/header.php';
 ?>
 
 <!DOCTYPE html>
@@ -19,8 +16,6 @@ $auth = new AuthManager($conn);
     <link rel="stylesheet" type="text/css" href="assets/css/textStyles.css">
 </head>
 <body>
-    <?php include 'templates/header.php'; ?>
-
     <div class="main-content">
         <div class="hero-title">
             <span class="hero-text">Every Pet Deserves a Loving Home.</span><br>

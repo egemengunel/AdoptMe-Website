@@ -1,4 +1,20 @@
-<!-- header.php -->
+<?php
+// Start session if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Include necessary files if not already included
+if (!class_exists('AuthManager')) {
+    require_once __DIR__ . '/../includes/db_connect.php';
+    require_once __DIR__ . '/../includes/AuthManager.php';
+    
+    // Initialize AuthManager if not already initialized
+    if (!isset($auth)) {
+        $auth = new AuthManager($conn);
+    }
+}
+?>
 
 <div class="header">
     <!-- Header Logo -->
@@ -53,3 +69,6 @@
         <?php endif; ?>
     </div>
 </div>
+
+<!-- Add script reference at the bottom -->
+<script src="assets/js/header.js"></script>

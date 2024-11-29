@@ -128,13 +128,11 @@
     background: black;
     border-radius: 7px;
     padding: 15px 9px 16px 10px;
-    display: none;
     z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s;
+    display: none;
 }
 
+/* Keep the arrow styling */
 .profile-dropdown-menu::before {
     content: '';
     position: absolute;
@@ -145,23 +143,6 @@
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
     border-bottom: 8px solid black;
-}
-
-.profile-button:hover .profile-dropdown-menu {
-    display: block;
-    opacity: 1;
-    visibility: visible;
-    transition-delay: 0.2s;
-}
-
-.profile-dropdown-menu:hover {
-    display: block;
-    opacity: 1;
-    visibility: visible;
-}
-
-.profile-button:not(:hover) .profile-dropdown-menu:not(:hover) {
-    transition-delay: 0.5s;
 }
 
 .dropdown-item {

@@ -1,6 +1,4 @@
 <?php
-session_start();
-require_once 'db_connect.php';
 
 class AuthManager {
     private $conn;
@@ -15,16 +13,26 @@ class AuthManager {
         $stmt->execute();
         $result = $stmt->get_result();
         
+        error_log("Login attempt - Email: " . $email);
+        
         if ($result->num_rows === 1) {
             $user = $result->fetch_assoc();
-            error_log("Attempting login for email: " . $email);
+            error_log("User found in database");
             error_log("Stored hash: " . $user['password']);
+            error_log("Provided password: " . $password);
+            
             if (password_verify($password, $user['password'])) {
+                error_log("Password verified successfully");
                 // Remove password before storing in session
                 unset($user['password']);
                 $_SESSION['user'] = $user;
+                error_log("Session data set: " . print_r($_SESSION, true));
                 return true;
+            } else {
+                error_log("Password verification failed");
             }
+        } else {
+            error_log("No user found with email: " . $email);
         }
         return false;
     }
@@ -49,7 +57,15 @@ class AuthManager {
     }
     
     public function logout() {
-        session_unset();
+        // Unset all session variables
+        $_SESSION = array();
+        
+        // Destroy the session cookie
+        if (isset($_COOKIE[session_name()])) {
+            setcookie(session_name(), '', time()-3600, '/');
+        }
+        
+        // Destroy the session
         session_destroy();
     }
     
