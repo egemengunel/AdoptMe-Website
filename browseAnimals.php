@@ -1,6 +1,7 @@
 <?php
 // Include header
 include 'templates/header.php';
+
 // Determine the animal type (dogs or cats)
 $animal_type = isset($_GET['type']) ? $_GET['type'] : 'dogs';
 
@@ -15,6 +16,9 @@ if ($animal_type === 'cats') {
     $animal_name = 'Dog';
     $plural_animal_name = 'Dogs';
 }
+
+// Ensure the type matches the database values
+$animal_type = ($animal_type === 'dogs') ? 'dog' : 'cat';
 
 // Include necessary CSS files
 ?>
@@ -47,31 +51,22 @@ if ($animal_type === 'cats') {
                 <!-- Animal Cards Row -->
                 <div class="animal-cards-row">
                     <?php
-                    // Fetch animal data from the database based on $animal_type
-                    // For now, we'll use placeholder data
+                    require_once 'includes/db_connect.php';
+                    require_once 'includes/AnimalManager.php';
+                    $animalManager = new AnimalManager($conn);
 
-                    // Placeholder data array
-                    $animals = [
-                        [
-                            'imageSrc' => 'https://via.placeholder.com/290x213',
-                            'animalName' => 'Freddy, Husky',
-                        ],
-                        [
-                            'imageSrc' => 'https://via.placeholder.com/290x213',
-                            'animalName' => 'Ella, Labrador Retriever',
-                        ],
-                        [
-                            'imageSrc' => 'https://via.placeholder.com/290x213',
-                            'animalName' => 'Max, German Shepherd',
-                        ],
-                        // Add more animals as needed
-                    ];
+                    // Get animals based on the type (dogs/cats)
+                    $animals = $animalManager->getAnimalsByType($animal_type);
 
-                    // Loop through the animals and include the animal card template
-                    foreach ($animals as $animal) {
-                        $imageSrc = $animal['imageSrc'];
-                        $animalName = $animal['animalName'];
-                        include 'templates/animalCard.php';
+                    if (empty($animals)) {
+                        echo "<p>No {$plural_animal_name} available at the moment.</p>";
+                    } else {
+                        foreach ($animals as $animal) {
+                            $animalId = $animal['animal_id'];
+                            $imageSrc = $animal['image_url'];
+                            $animalName = $animal['name'] . ', ' . $animal['breed'];
+                            include 'templates/animalCard.php';
+                        }
                     }
                     ?>
                 </div>

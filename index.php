@@ -1,5 +1,7 @@
 <?php
 include 'templates/header.php';
+require_once 'includes/AnimalManager.php';
+$animalManager = new AnimalManager($conn);
 ?>
 
 <!DOCTYPE html>
@@ -51,56 +53,34 @@ include 'templates/header.php';
             <!-- Dogs Section -->
             <div class="animal-category">
                 <a href="browseAnimals.php?type=dogs" class="animal-link">Dogs</a> 
-                <span class="animal-count">137</span>
+                <span class="animal-count"><?php echo count($animalManager->getAnimalsByType('dog')); ?></span>
             </div>
             <div class="animal-cards-row" style="display: flex; gap: 20px;">
                 <?php
-                    $imageSrc = "https://via.placeholder.com/290x213";
-                    $animalName = "Freddy, Husky";
+                $dogs = $animalManager->getAnimalsByType('dog', 4);
+                foreach ($dogs as $animal) {
+                    $animalId = $animal['animal_id'];
+                    $imageSrc = $animal['image_url'];
+                    $animalName = $animal['name'] . ', ' . $animal['breed'];
                     include 'templates/animalCard.php';
-                ?>
-                <?php
-                    $imageSrc = "https://via.placeholder.com/290x213";
-                    $animalName = "Ella, Labrador Retriever";
-                    include 'templates/animalCard.php';
-                ?>
-                <?php
-                    $imageSrc = "https://via.placeholder.com/290x213";
-                    $animalName = "German Shepherd";
-                    include 'templates/animalCard.php';
-                ?>
-                <?php
-                    $imageSrc = "https://via.placeholder.com/290x213";
-                    $animalName = "Brad, Bull Dog";
-                    include 'templates/animalCard.php';
+                }
                 ?>
             </div>
 
             <!-- Cats Section -->
             <div class="animal-category">
                 <a href="browseAnimals.php?type=cats" class="animal-link">Cats</a> 
-                <span class="animal-count">137</span>
+                <span class="animal-count"><?php echo count($animalManager->getAnimalsByType('cat')); ?></span>
             </div>
             <div class="animal-cards-row" style="display: flex; gap: 20px;">
                 <?php
-                    $imageSrc = "https://via.placeholder.com/290x213";
-                    $animalName = "Freddy, Husky";
+                $cats = $animalManager->getAnimalsByType('cat', 4);
+                foreach ($cats as $animal) {
+                    $animalId = $animal['animal_id'];
+                    $imageSrc = $animal['image_url'];
+                    $animalName = $animal['name'] . ', ' . $animal['breed'];
                     include 'templates/animalCard.php';
-                ?>
-                <?php
-                    $imageSrc = "https://via.placeholder.com/290x213";
-                    $animalName = "Ella, Labrador Retriever";
-                    include 'templates/animalCard.php';
-                ?>
-                <?php
-                    $imageSrc = "https://via.placeholder.com/290x213";
-                    $animalName = "German Shepherd";
-                    include 'templates/animalCard.php';
-                ?>
-                <?php
-                    $imageSrc = "https://via.placeholder.com/290x213";
-                    $animalName = "Brad, Bull Dog";
-                    include 'templates/animalCard.php';
+                }
                 ?>
             </div>
         </div>
