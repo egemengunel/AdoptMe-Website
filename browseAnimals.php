@@ -55,8 +55,11 @@ $animal_type = ($animal_type === 'dogs') ? 'dog' : 'cat';
                     require_once 'includes/AnimalManager.php';
                     $animalManager = new AnimalManager($conn);
 
-                    // Get animals based on the type (dogs/cats)
-                    $animals = $animalManager->getAnimalsByType($animal_type);
+                    // Get the search term from URL parameters
+                    $search = isset($_GET['search']) ? htmlspecialchars($_GET['search']) : null;
+
+                    // Modify the existing animals fetch
+                    $animals = $animalManager->getAnimalsByType($animal_type, null, $search);
 
                     if (empty($animals)) {
                         echo "<p>No {$plural_animal_name} available at the moment.</p>";

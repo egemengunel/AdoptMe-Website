@@ -6,15 +6,29 @@ class AnimalManager {
         $this->conn = $conn;
     }
     
-    public function getAnimalsByType($type, $limit = null) {
+    public function getAnimalsByType($type, $limit = null, $search = null) {
         $sql = "SELECT * FROM animals WHERE type = ?";
+        
+        // Add search conditions if search term is provided
+        if ($search) {
+            $sql .= " AND (name LIKE ? OR breed LIKE ? OR age LIKE ?)";
+        }
+        
+        // Add limit if provided
         if ($limit) {
             $sql .= " LIMIT ?";
         }
         
         $stmt = $this->conn->prepare($sql);
         
-        if ($limit) {
+        // Bind parameters based on what's provided
+        if ($search && $limit) {
+            $searchTerm = "%$search%";
+            $stmt->bind_param("ssssi", $type, $searchTerm, $searchTerm, $searchTerm, $limit);
+        } elseif ($search) {
+            $searchTerm = "%$search%";
+            $stmt->bind_param("ssss", $type, $searchTerm, $searchTerm, $searchTerm);
+        } elseif ($limit) {
             $stmt->bind_param("si", $type, $limit);
         } else {
             $stmt->bind_param("s", $type);

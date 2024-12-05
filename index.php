@@ -42,7 +42,7 @@ $animalManager = new AnimalManager($conn);
         <img class="arrow-icon" src="assets/icons/Expand_Arrow.png" alt="Arrow Icon">
     </div>
     <input type="text" class="search-input search-element" placeholder="Search by breed, age or name...">
-    <button class="search-button search-element">
+    <button class="search-button search-element" id="search-button">
     <img src="assets/icons/Search.png" alt="Search Icon" class="search-icon">
     Search
 </button>
@@ -87,6 +87,6 @@ $animalManager = new AnimalManager($conn);
     </div>
 
     <?php include 'templates/footer.php'; ?>
-    <script src="assets/js/script.js"></script>
+    <script src="assets/js/searchHandler.js"></script>
 </body>
 </html>
