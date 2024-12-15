@@ -37,21 +37,26 @@ $profilePicture = $user['profile_picture_url'] ?? '';
         <div class="content-wrapper">
             <div class="content-container">
                 <div class="profile-container">
-                    <h1 class="profile-header">Your Profile</h1>
+                    <h1 class="page-title">Your Profile</h1>
                     <div class="profile-divider"></div>
 
                     <div class="profile-content">
                         <div class="profile-picture-container">
-                            <img src="<?php echo $profilePicture ?: 'assets/images/default-profile.png'; ?>" alt="Profile Picture" class="profile-picture">
+                            <img src="<?php echo $profilePicture ?: 'assets/images/default_pfp.jpg'; ?>" alt="Profile Picture" class="profile-picture">
                             <label class="profile-picture-label">
-                                add a new profile picture
+                                <img src="assets/icons/camera.svg" alt="Edit" class="edit-icon">
+                                Change Profile Picture
                                 <input type="file" accept="image/*" style="display: none;" id="profile-picture-input">
                             </label>
                         </div>
 
                         <div class="profile-info">
-                            <div class="profile-name"><?php echo htmlspecialchars($name); ?></div>
-                            <textarea class="profile-bio" placeholder="tell us a little bit about yourself.."><?php echo htmlspecialchars($bio); ?></textarea>
+                            <div class="profile-name-container">
+                                <input type="text" class="profile-name-input" value="<?php echo htmlspecialchars($name); ?>" placeholder="Your Name">
+                                <img src="assets/icons/edit.svg" alt="Edit" class="edit-icon">
+                            </div>
+                            <textarea class="profile-bio" placeholder="Tell us a little bit about yourself.."><?php echo htmlspecialchars($bio); ?></textarea>
+                            <button class="save-profile-btn" id="saveProfile">Save Changes</button>
                         </div>
                     </div>
                 </div>
@@ -62,36 +67,53 @@ $profilePicture = $user['profile_picture_url'] ?? '';
     </div>
 
     <script>
-        // Handle profile picture upload
-        document.getElementById('profile-picture-input').addEventListener('change', async function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
+        document.addEventListener('DOMContentLoaded', function() {
+            const profilePictureInput = document.getElementById('profile-picture-input');
+            const profilePicture = document.querySelector('.profile-picture');
+            const nameInput = document.querySelector('.profile-name-input');
+            const bioInput = document.querySelector('.profile-bio');
+            const saveButton = document.getElementById('saveProfile');
+            
+            let hasChanges = false;
 
-            const formData = new FormData();
-            formData.append('profile_picture', file);
+            // Handle profile picture change
+            profilePictureInput.addEventListener('change', async function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
 
-            try {
-                const response = await fetch('update_profile.php', {
-                    method: 'POST',
-                    body: formData
-                });
-                
-                if (response.ok) {
-                    const result = await response.json();
-                    if (result.success) {
-                        document.querySelector('.profile-picture').src = result.image_url;
+                const formData = new FormData();
+                formData.append('profile_picture', file);
+
+                try {
+                    const response = await fetch('update_profile.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    if (response.ok) {
+                        const result = await response.json();
+                        if (result.success) {
+                            profilePicture.src = result.image_url;
+                            hasChanges = true;
+                        }
                     }
+                } catch (error) {
+                    console.error('Error uploading profile picture:', error);
                 }
-            } catch (error) {
-                console.error('Error uploading profile picture:', error);
-            }
-        });
+            });
 
-        // Handle bio updates
-        let bioUpdateTimeout;
-        document.querySelector('.profile-bio').addEventListener('input', function(e) {
-            clearTimeout(bioUpdateTimeout);
-            bioUpdateTimeout = setTimeout(async () => {
+            // Track changes in inputs
+            [nameInput, bioInput].forEach(input => {
+                input.addEventListener('input', () => {
+                    hasChanges = true;
+                    saveButton.style.opacity = '1';
+                });
+            });
+
+            // Handle save button click
+            saveButton.addEventListener('click', async function() {
+                if (!hasChanges) return;
+
                 try {
                     const response = await fetch('update_profile.php', {
                         method: 'POST',
@@ -99,17 +121,35 @@ $profilePicture = $user['profile_picture_url'] ?? '';
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            bio: e.target.value
+                            username: nameInput.value,
+                            bio: bioInput.value
                         })
                     });
                     
-                    if (!response.ok) {
-                        console.error('Error updating bio');
+                    if (response.ok) {
+                        const result = await response.json();
+                        if (result.success) {
+                            hasChanges = false;
+                            saveButton.style.opacity = '0.5';
+                            showNotification('Profile updated successfully!');
+                        }
                     }
                 } catch (error) {
-                    console.error('Error updating bio:', error);
+                    console.error('Error updating profile:', error);
+                    showNotification('Error updating profile', 'error');
                 }
-            }, 500);
+            });
+
+            function showNotification(message, type = 'success') {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
         });
     </script>
 </body>

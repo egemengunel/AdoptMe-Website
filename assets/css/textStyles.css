@@ -232,3 +232,53 @@ body {
     font-weight: 700;
     color: #494949;
 }
+
+/* --- Text Styles for Profile Page --- */
+
+/* Profile Title (matches auth-title style) */
+.profile-header {
+    font-size: 33px;
+    font-weight: 700;
+    color: black;
+}
+
+/* Profile Name Input */
+.profile-name-input {
+    font-size: 24px;
+    font-weight: 600;
+    color: black;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Profile Bio */
+.profile-bio {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #494949;
+}
+
+.profile-bio::placeholder {
+    color: #494949;
+    font-weight: 600;
+}
+
+/* Profile Picture Label */
+.profile-picture-label {
+    color: #494949;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Save Profile Button */
+.save-profile-btn {
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Profile Notifications */
+.notification {
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+}
