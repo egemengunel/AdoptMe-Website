@@ -7,11 +7,14 @@ class AnimalManager {
     }
     
     public function getAnimalsByType($type, $limit = null, $search = null) {
-        $sql = "SELECT * FROM animals WHERE type = ?";
+        $sql = "SELECT a.*, ai.image_url 
+                FROM animals a 
+                LEFT JOIN animal_images ai ON a.animal_id = ai.animal_id 
+                WHERE a.type = ? AND ai.is_primary = TRUE";
         
         // Add search conditions if search term is provided
         if ($search) {
-            $sql .= " AND (name LIKE ? OR breed LIKE ? OR age LIKE ?)";
+            $sql .= " AND (a.name LIKE ? OR a.breed LIKE ? OR a.age LIKE ?)";
         }
         
         // Add limit if provided
@@ -39,7 +42,12 @@ class AnimalManager {
     }
     
     public function getAnimalById($id) {
-        $stmt = $this->conn->prepare("SELECT * FROM animals WHERE animal_id = ?");
+        $stmt = $this->conn->prepare("
+            SELECT a.*, ai.image_url 
+            FROM animals a 
+            LEFT JOIN animal_images ai ON a.animal_id = ai.animal_id 
+            WHERE a.animal_id = ? AND ai.is_primary = TRUE
+        ");
         $stmt->bind_param("i", $id);
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();

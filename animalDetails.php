@@ -1,3 +1,44 @@
+<?php
+// Add these at the very top of the file
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+require_once 'includes/db.php';
+require_once 'includes/AnimalManager.php';
+
+// Let's also add some debug output
+$animalId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+echo "Animal ID: " . $animalId . "<br>";
+
+// Initialize AnimalManager
+$animalManager = new AnimalManager($conn);
+
+// Get animal details
+$animal = $animalManager->getAnimalById($animalId);
+echo "Animal data: <pre>";
+print_r($animal);
+echo "</pre>";
+
+// Get all images for this animal
+$stmt = $conn->prepare("
+    SELECT image_url 
+    FROM animal_images 
+    WHERE animal_id = ?
+    ORDER BY is_primary DESC
+");
+$stmt->bind_param("i", $animalId);
+$stmt->execute();
+$images = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+echo "Images data: <pre>";
+print_r($images);
+echo "</pre>";
+
+// If animal not found, redirect to home
+if (!$animal) {
+    header('Location: index.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,17 +69,16 @@
                     <!-- Image Gallery -->
                     <div class="image-gallery">
                         <div class="gallery-grid">
-                            <div class="gallery-item"></div>
-                            <div class="gallery-item"></div>
-                            <div class="gallery-item"></div>
-                            <div class="gallery-item"></div>
+                            <?php foreach ($images as $image): ?>
+                                <div class="gallery-item" style="background-image: url('<?php echo htmlspecialchars($image['image_url']); ?>');"></div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
 
-                    <!-- Animal Details - Removed the border here -->
+                    <!-- Animal Details -->
                     <div class="details-section">
                         <div class="details-header">
-                            <h1>Animal Name</h1>
+                            <h1><?php echo htmlspecialchars($animal['name']); ?></h1>
                             <button class="favorite-btn">Add to Favorites ♡</button>
                         </div>
 
@@ -46,23 +86,31 @@
                             <h2>About</h2>
                             <hr class="divider-primary">
                             <p class="description">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+                                <?php echo htmlspecialchars($animal['description']); ?>
                             </p>
                         </div>
 
                         <hr class="divider-secondary">
                         
                         <div class="characteristics">
-                            <p class="characteristics-text">Adult · Female · Large · White / Cream</p>
-                            <p class="breed-location">Bull Terrier · New York, NY</p>
+                            <p class="characteristics-text">
+                                <?php echo htmlspecialchars($animal['age']); ?> · 
+                                <?php echo htmlspecialchars($animal['gender']); ?> · 
+                                <?php echo htmlspecialchars($animal['size']); ?> · 
+                                <?php echo htmlspecialchars($animal['color']); ?>
+                            </p>
+                            <p class="breed-location">
+                                <?php echo htmlspecialchars($animal['breed']); ?> · 
+                                <?php echo htmlspecialchars($animal['location']); ?>
+                            </p>
                         </div>
 
                         <hr class="divider-secondary">
 
                         <div class="contact-section">
                             <h2>Address · Contact</h2>
-                            <p class="address">Bla bla Street. St Martinas Adoption Centre 5464 New York</p>
-                            <p class="phone">Call Adoption Center+1 256436621</p>
+                            <p class="address"><?php echo htmlspecialchars($animal['location']); ?></p>
+                            <p class="phone">Call Adoption Center +1 256436621</p>
                         </div>
                     </div>
                 </div>
