@@ -30,9 +30,10 @@ class FilterManager {
                 WHERE $column IS NOT NULL 
                 AND $column != ''";
         
-        // Add animal type filter if provided
+        // Convert URL type to database type
         if ($animalType) {
-            $sql .= " AND type = '" . $this->conn->real_escape_string($animalType) . "'";
+            $dbType = ($animalType === 'dogs') ? 'dog' : 'cat';
+            $sql .= " AND type = '" . $this->conn->real_escape_string($dbType) . "'";
         }
         
         $sql .= " ORDER BY $column";
@@ -67,12 +68,14 @@ class FilterManager {
     // Get filtered animals
     public function getFilteredAnimals($filters) {
         $conditions = [];
-        $params = [];
         
-        // Build WHERE clause
+        // Convert URL type to database type and add to conditions
         if (!empty($filters['type'])) {
-            $conditions[] = "a.type = '" . $this->conn->real_escape_string($filters['type']) . "'";
+            $dbType = ($filters['type'] === 'dogs') ? 'dog' : 'cat';
+            $conditions[] = "a.type = '" . $this->conn->real_escape_string($dbType) . "'";
         }
+        
+        // Add other filter conditions
         if (!empty($filters['age'])) {
             $conditions[] = "a.age = '" . $this->conn->real_escape_string($filters['age']) . "'";
         }
@@ -110,11 +113,19 @@ class FilterManager {
         }
         
         // Fetch results
-        $animals = [];
-        while ($row = $result->fetch_assoc()) {
-            $animals[] = $row;
-        }
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    
+    public function hasActiveFilters($filters) {
+        // Remove 'type' from consideration as it's always set
+        unset($filters['type']);
         
-        return $animals;
+        // Check if any other filters are set
+        foreach ($filters as $value) {
+            if (!empty($value)) {
+                return true;
+            }
+        }
+        return false;
     }
 } 

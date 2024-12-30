@@ -52,4 +52,23 @@ class AnimalManager {
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
+    
+    public function searchAnimals($searchTerm, $type) {
+        $searchTerm = $this->conn->real_escape_string($searchTerm);
+        $type = $this->conn->real_escape_string($type);
+        
+        $sql = "SELECT a.*, ai.image_url 
+                FROM animals a
+                LEFT JOIN animal_images ai ON a.animal_id = ai.animal_id 
+                WHERE ai.is_primary = 1 
+                AND a.type = ?
+                AND (a.name LIKE ? OR a.breed LIKE ? OR a.age LIKE ?)";
+                
+        $stmt = $this->conn->prepare($sql);
+        $searchPattern = "%$searchTerm%";
+        $stmt->bind_param('ssss', $type, $searchPattern, $searchPattern, $searchPattern);
+        $stmt->execute();
+        
+        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    }
 }

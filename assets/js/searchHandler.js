@@ -18,20 +18,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Search function
     function performSearch() {
-        console.log('Search initiated'); // Debug log
         const searchTerm = searchInput.value.trim();
         const animalType = animalSelect.value;
         
-        // Convert animal type to match database format
-        const dbAnimalType = animalType === 'dogs' ? 'dog' : 'cat';
+        // Build search URL with parameters
+        let searchUrl = `browseAnimals.php?type=${animalType}`;
         
-        // Construct URL
-        const searchParams = new URLSearchParams();
-        if (searchTerm) searchParams.append('search', searchTerm);
-        searchParams.append('type', animalType);
+        if (searchTerm) {
+            searchUrl += `&search=${encodeURIComponent(searchTerm)}`;
+        }
         
-        // Redirect to browse page
-        window.location.href = `browseAnimals.php?${searchParams.toString()}`;
+        // Redirect to browse page with search parameters
+        window.location.href = searchUrl;
     }
 
     // Event Listeners

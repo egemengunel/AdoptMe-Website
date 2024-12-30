@@ -4,6 +4,7 @@ include 'templates/header.php';
 
 // Determine the animal type (dogs or cats)
 $animal_type = isset($_GET['type']) ? $_GET['type'] : 'dogs';
+$search_term = isset($_GET['search']) ? $_GET['search'] : '';
 
 // Set variables based on the animal type
 if ($animal_type === 'cats') {
@@ -18,7 +19,7 @@ if ($animal_type === 'cats') {
 }
 
 // Ensure the type matches the database values
-$animal_type = ($animal_type === 'dogs') ? 'dog' : 'cat';
+$db_type = ($animal_type === 'dogs') ? 'dog' : 'cat';
 
 require_once 'includes/db_connect.php';
 require_once 'includes/AnimalManager.php';
@@ -27,12 +28,21 @@ require_once 'includes/FilterManager.php';
 $animalManager = new AnimalManager($conn);
 $filterManager = new FilterManager($conn);
 
-// Get current filters
-$currentFilters = $filterManager->getCurrentFilters();
-$currentFilters['type'] = $animal_type; // Add animal type to filters
-
-// Get filtered animals
-$animals = $filterManager->getFilteredAnimals($currentFilters);
+// If there's a search term, use AnimalManager to search
+if (!empty($search_term)) {
+    $animals = $animalManager->getAnimalsByType($db_type, null, $search_term);
+} else {
+    // Get current filters
+    $currentFilters = $filterManager->getCurrentFilters();
+    
+    // If any filters are active, use the filter system
+    if ($filterManager->hasActiveFilters($currentFilters)) {
+        $animals = $filterManager->getFilteredAnimals($currentFilters);
+    } else {
+        // If no filters, show all animals of the selected type
+        $animals = $animalManager->getAnimalsByType($db_type);
+    }
+}
 ?>
 
 <!DOCTYPE html>
