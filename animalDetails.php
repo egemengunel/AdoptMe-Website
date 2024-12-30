@@ -1,23 +1,18 @@
 <?php
-// Add these at the very top of the file
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
+session_start();
 require_once 'includes/db.php';
 require_once 'includes/AnimalManager.php';
+require_once 'includes/FavoriteManager.php';
 
-// Let's also add some debug output
 $animalId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-echo "Animal ID: " . $animalId . "<br>";
-
-// Initialize AnimalManager
 $animalManager = new AnimalManager($conn);
-
-// Get animal details
+$favoriteManager = new FavoriteManager($conn);
 $animal = $animalManager->getAnimalById($animalId);
-echo "Animal data: <pre>";
-print_r($animal);
-echo "</pre>";
+
+$isFavorited = false;
+if (isset($_SESSION['user']['user_id'])) {
+    $isFavorited = $favoriteManager->isFavorited($_SESSION['user']['user_id'], $animalId);
+}
 
 // Get all images for this animal
 $stmt = $conn->prepare("
@@ -29,9 +24,6 @@ $stmt = $conn->prepare("
 $stmt->bind_param("i", $animalId);
 $stmt->execute();
 $images = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-echo "Images data: <pre>";
-print_r($images);
-echo "</pre>";
 
 // If animal not found, redirect to home
 if (!$animal) {
@@ -44,7 +36,7 @@ if (!$animal) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $animalName; ?> - AdoptMe</title>
+    <title><?php echo htmlspecialchars($animal['name']); ?> - AdoptMe</title>
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="assets/css/header.css">
     <link rel="stylesheet" href="assets/css/footer.css">
@@ -79,7 +71,21 @@ if (!$animal) {
                     <div class="details-section">
                         <div class="details-header">
                             <h1><?php echo htmlspecialchars($animal['name']); ?></h1>
-                            <button class="favorite-btn">Add to Favorites ♡</button>
+                            <?php if (isset($_SESSION['user']['user_id'])): ?>
+                                <!-- Logged in user can favorite -->
+                                <form action="includes/toggleFavorite.php" method="POST">
+                                    <input type="hidden" name="animal_id" value="<?php echo $animalId; ?>">
+                                    <button type="submit" class="favorite-btn <?php echo $isFavorited ? 'favorited' : ''; ?>">
+                                        <?php echo $isFavorited ? 'Remove from Favorites ♥' : 'Add to Favorites ♡'; ?>
+                                    </button>
+                                </form>
+                            <?php else: ?>
+                                <!-- Not logged in - redirect to auth -->
+                                <form action="auth.php" method="GET">
+                                    <input type="hidden" name="mode" value="signin">
+                                    <button type="submit" class="favorite-btn">Login to Favorite ♡</button>
+                                </form>
+                            <?php endif; ?>
                         </div>
 
                         <div class="about-section">
