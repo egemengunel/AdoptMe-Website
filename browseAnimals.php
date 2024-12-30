@@ -20,8 +20,21 @@ if ($animal_type === 'cats') {
 // Ensure the type matches the database values
 $animal_type = ($animal_type === 'dogs') ? 'dog' : 'cat';
 
-// Include necessary CSS files
+require_once 'includes/db_connect.php';
+require_once 'includes/AnimalManager.php';
+require_once 'includes/FilterManager.php';
+
+$animalManager = new AnimalManager($conn);
+$filterManager = new FilterManager($conn);
+
+// Get current filters
+$currentFilters = $filterManager->getCurrentFilters();
+$currentFilters['type'] = $animal_type; // Add animal type to filters
+
+// Get filtered animals
+$animals = $filterManager->getFilteredAnimals($currentFilters);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,6 +46,7 @@ $animal_type = ($animal_type === 'dogs') ? 'dog' : 'cat';
     <link rel="stylesheet" href="assets/css/animalPages.css">
     <link rel="stylesheet" href="assets/css/animalCard.css">
     <link rel="stylesheet" href="assets/css/textStyles.css">
+    <link rel="stylesheet" href="assets/css/filterTool.css">
 </head>
 <body>
     <div class="wrapper">
@@ -43,7 +57,7 @@ $animal_type = ($animal_type === 'dogs') ? 'dog' : 'cat';
                 <hr class="title-divider" />
             </div>
 
-            <!-- Main Content Wrapper -->
+            <!-- Main Content -->
             <div class="main-content">
                 <!-- Include the filtration tool -->
                 <?php include 'templates/filterTool.php'; ?>
@@ -51,18 +65,8 @@ $animal_type = ($animal_type === 'dogs') ? 'dog' : 'cat';
                 <!-- Animal Cards Row -->
                 <div class="animal-cards-row">
                     <?php
-                    require_once 'includes/db_connect.php';
-                    require_once 'includes/AnimalManager.php';
-                    $animalManager = new AnimalManager($conn);
-
-                    // Get the search term from URL parameters
-                    $search = isset($_GET['search']) ? htmlspecialchars($_GET['search']) : null;
-
-                    // Modify the existing animals fetch
-                    $animals = $animalManager->getAnimalsByType($animal_type, null, $search);
-
                     if (empty($animals)) {
-                        echo "<p>No {$plural_animal_name} available at the moment.</p>";
+                        echo "<p>No {$plural_animal_name} available matching your criteria.</p>";
                     } else {
                         foreach ($animals as $animal) {
                             $animalId = $animal['animal_id'];
@@ -76,10 +80,7 @@ $animal_type = ($animal_type === 'dogs') ? 'dog' : 'cat';
             </div>
         </div>
 
-        <?php
-        // Include footer
-        include 'templates/footer.php';
-        ?>
+        <?php include 'templates/footer.php'; ?>
     </div>
 </body>
 </html>

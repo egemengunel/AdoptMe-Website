@@ -1,0 +1,86 @@
+.filter-tool {
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    width: 250px; /* Fixed width for the filter panel */
+}
+
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.filter-item {
+    width: 100%;
+}
+
+.filter-select {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    font-size: 16px;
+    cursor: pointer;
+    appearance: none; /* Removes default arrow */
+    position: relative;
+}
+
+/* Custom dropdown arrow */
+.filter-item {
+    position: relative;
+}
+
+.filter-item::after {
+    content: '';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #333;
+    pointer-events: none;
+}
+
+.filter-select:hover {
+    background-color: #e8e8e8;
+}
+
+.filter-select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.filter-apply-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.filter-apply-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Layout adjustments for the main content */
+.main-content {
+    display: flex;
+    gap: 30px;
+}
+
+.animal-cards-row {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+} 
