@@ -1,6 +1,6 @@
 <?php
-require_once 'includes/db_connect.php';
-require_once 'includes/FilterManager.php';
+require_once '../../includes/db_connect.php';
+require_once '../../includes/FilterManager.php';
 
 header('Content-Type: application/json');
 
@@ -18,4 +18,4 @@ try {
 } catch (Exception $e) {
     http_response_code(400);
     echo json_encode(['error' => $e->getMessage()]);
-} 
+}

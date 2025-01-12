@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             try {
-                const response = await fetch(`get_breeds.php?type=${selectedType}`);
+                const response = await fetch(`api/animals/get_breeds.php?type=${selectedType}`);
                 if (!response.ok) throw new Error('Network response was not ok');
                 
                 const breeds = await response.json();
