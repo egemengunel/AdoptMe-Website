@@ -36,23 +36,28 @@ $isUploadPage = true;
                     <p class="upload-instruction">add photos of your animal</p>
                 </div>
 
-                <!-- Animal Details Section -->
-                <div class="animal-details">
-                    <input type="text" 
-                           name="name" 
-                           placeholder="Name of Your Animal" 
-                           class="animal-name-input">
-                    
-                    <textarea name="description" 
-                             placeholder="tell us a little about your animal..." 
-                             class="animal-description"></textarea>
-
-                    <?php include 'templates/filterTool.php'; ?>
-
-                    <div class="form-actions">
-                        <button type="button" class="cancel-btn">Cancel</button>
-                        <button type="submit" class="save-btn">Save</button>
+                <div class="form-content">
+                    <!-- Left Column: Text inputs -->
+                    <div class="form-left-column">
+                        <input type="text" 
+                               name="name" 
+                               placeholder="Name of Your Animal" 
+                               class="animal-name-input">
+                        
+                        <textarea name="description" 
+                                 placeholder="tell us a little about your animal..." 
+                                 class="animal-description"></textarea>
                     </div>
+
+                    <!-- Right Column: Filter Tool -->
+                    <div class="form-right-column">
+                        <?php include 'templates/filterTool.php'; ?>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn">Cancel</button>
+                    <button type="submit" class="save-btn">Save</button>
                 </div>
             </form>
         </div>

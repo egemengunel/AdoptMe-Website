@@ -128,4 +128,22 @@ class FilterManager {
         }
         return false;
     }
+    
+    public function getBreedsByType($type) {
+        // Using mysqli style to match the rest of the class
+        $type = $this->conn->real_escape_string($type);
+        $sql = "SELECT DISTINCT breed FROM animals WHERE type = '$type' ORDER BY breed";
+        $result = $this->conn->query($sql);
+        
+        if (!$result) {
+            return [];
+        }
+        
+        $breeds = [];
+        while ($row = $result->fetch_assoc()) {
+            $breeds[] = $row['breed'];
+        }
+        
+        return $breeds;
+    }
 } 

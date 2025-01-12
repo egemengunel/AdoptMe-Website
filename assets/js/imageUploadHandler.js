@@ -32,4 +32,40 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Handle animal type selection
+    const typeSelect = document.getElementById('animalType');
+    const breedSelect = document.getElementById('breedSelect');
+
+    if (typeSelect) {
+        typeSelect.addEventListener('change', async function() {
+            const selectedType = this.value;
+            breedSelect.disabled = true;
+            
+            if (!selectedType) {
+                breedSelect.innerHTML = '<option value="">Select Type First</option>';
+                return;
+            }
+
+            try {
+                const response = await fetch(`get_breeds.php?type=${selectedType}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                
+                const breeds = await response.json();
+                
+                breedSelect.innerHTML = '<option value="">Select Breed</option>';
+                breeds.forEach(breed => {
+                    const option = document.createElement('option');
+                    option.value = breed;
+                    option.textContent = breed;
+                    breedSelect.appendChild(option);
+                });
+                
+                breedSelect.disabled = false;
+            } catch (error) {
+                console.error('Error fetching breeds:', error);
+                breedSelect.innerHTML = '<option value="">Error loading breeds</option>';
+            }
+        });
+    }
 }); 

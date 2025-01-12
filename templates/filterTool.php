@@ -16,6 +16,17 @@ $layoutClass = $isUpload ? 'filter-tool--horizontal' : 'filter-tool--vertical';
     <?php endif; ?>
     
     <div class="filter-options">
+        <?php if ($isUpload): ?>
+        <!-- Type selector only shows on upload page -->
+        <div class="filter-item">
+            <select name="type" class="filter-select" id="animalType">
+                <option value="">Select Type</option>
+                <option value="dog">Dog</option>
+                <option value="cat">Cat</option>
+            </select>
+        </div>
+        <?php endif; ?>
+
         <div class="filter-item">
             <select name="age" class="filter-select">
                 <option value="">Any Age</option>
@@ -29,7 +40,7 @@ $layoutClass = $isUpload ? 'filter-tool--horizontal' : 'filter-tool--vertical';
         </div>
 
         <div class="filter-item">
-            <select name="breed" class="filter-select">
+            <select name="breed" class="filter-select" id="breedSelect" <?php echo $isUpload ? 'disabled' : ''; ?>>
                 <option value="">Any Breed</option>
                 <?php foreach ($filterOptions['breeds'] as $breed): ?>
                     <option value="<?php echo htmlspecialchars($breed); ?>"
