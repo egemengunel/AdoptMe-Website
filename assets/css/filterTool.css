@@ -88,16 +88,3 @@
 .filter-apply-btn:hover {
     background-color: #0056b3;
 }
-
-/* Layout adjustments for the main content */
-.main-content {
-    display: flex;
-    gap: 30px;
-}
-
-.animal-cards-row {
-    flex: 1;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-} 

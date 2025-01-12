@@ -1,12 +1,4 @@
-/* main.css (or index.css) */
 
-/* Main Content */
-.main-content {
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #ffffff;
-}
 
 /* Search Bar */
 .search-bar {
@@ -98,12 +90,4 @@
 /* Animal Category Section */
 .animal-category {
     margin-bottom: 10px; /* Space between category title and its cards */
-}
-
-/* Animal Cards Row */
-.animal-cards-row {
-    display: flex;
-    gap: 40px;
-    flex-wrap: nowrap; /* Ensures cards stay in a row */
-    overflow-x: auto; /* Allows horizontal scrolling if needed */
 }
